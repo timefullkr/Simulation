@@ -1,45 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Physics Simulation</title>
     <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
         canvas {
             border: 1px solid black;
         }
     </style>
 </head>
+
 <body>
-    <canvas id="canvas" width="300" height="400"></canvas>
+    <div id="container">
+        <canvas id="canvas"></canvas>
+        <div onclick="restartAnimation();" style="cursor: pointer; margin-top: 10px;">
+            animate
+        </div>
+        <div id="status" style="margin-top: 10px;">
+            x: 0, y: 0, speed: 0
+        </div>
+    </div>
+    
+    <!-- Script content remains the same -->
+
+</body>
+</html>
     <script>
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
 
-        // Constants
-        const WIDTH = 300;
-        const HEIGHT = 400;
+        // Set the canvas dimensions dynamically
+        canvas.width = window.innerWidth * 0.8;
+        canvas.height = canvas.width * (2.5 / 4);
+
+        const WIDTH = canvas.width;
+        const HEIGHT = canvas.height;
         const gravity = 9.8 / 10;
         const restitution = 0.7;
         const R = 10;
-        let X = R;
-        let Y = HEIGHT / 2;
-        const angle = 30;
-        const speed = 45;
 
-        // Velocity calculation
-        let dx = speed * Math.cos(angle * Math.PI / 180);
-        let dy = -speed * Math.sin(angle * Math.PI / 180);
+        let isAnimating = false;
 
-        // Class
         class Ball {
-            constructor(x, y, w, h, dx, dy) {
-                this.x = x;
-                this.y = y;
-                this.w = w;
-                this.h = h;
-                this.dx = dx;
-                this.dy = dy;
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = R;
+                this.y = HEIGHT - R; // Setting the ball at the bottom left
+
+                this.w = R * 2;
+                this.h = R * 2;
+
+                const angle = 45;
+                const speed = 25;
+                this.dx = speed * Math.cos(angle * Math.PI / 180);
+                this.dy = -speed * Math.sin(angle * Math.PI / 180);
+                this.sw = 0;
             }
 
             move() {
@@ -47,46 +76,64 @@
                 this.x += this.dx;
                 this.y += this.dy;
 
-                if(this.x + this.w/2 > WIDTH) {
-                    this.x = WIDTH - this.w/2;
+                if (this.x + this.w / 2 > WIDTH) {
+                    this.x = WIDTH - this.w / 2;
                     this.dx *= -restitution;
-                } else if(this.x - this.w/2 < 0) {
-                    this.x = this.w/2;
+                } else if (this.x - this.w / 2 < 0) {
+                    this.x = this.w / 2;
                     this.dx *= -restitution;
                 }
 
-                if(this.y + this.h/2 > HEIGHT) {
-                    this.y = HEIGHT - this.h/2;
+                if (this.y + this.h / 2 > HEIGHT) {
+                    this.y = HEIGHT - this.h / 2;
                     this.dy *= -restitution;
-                } else if(this.y - this.h/2 < 0) {
-                    this.y = this.h/2;
+                } else if (this.y - this.h / 2 < 0) {
+                    this.y = this.h / 2;
                     this.dy *= -restitution;
+                }
+
+                if (this.getSpeed() < 4 && HEIGHT - R - ball.y.toFixed(2) == 0) {
+                    
+                    isAnimating = false;
                 }
             }
 
             display() {
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.w, 0, Math.PI * 2);
+                ctx.arc(this.x, this.y, this.w / 2, 0, Math.PI * 2);
                 ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
                 ctx.fill();
                 ctx.closePath();
             }
+
+            getSpeed() {
+                
+                return Math.sqrt(this.dx * this.dx + this.dy * this.dy).toFixed(2);
+            }
         }
 
-        // Instantiate class
-        const ball = new Ball(X, Y, R, R, dx, dy);
+        const ball = new Ball();
 
-        // Animation Loop
         function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
+            if (!isAnimating) return;
+
+            ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
             ball.move();
             ball.display();
 
-            requestAnimationFrame(animate);
+            document.getElementById('status').textContent =
+                `x: ${ball.x.toFixed(2)}, y: ${HEIGHT - R - ball.y.toFixed(2)}, speed: ${ball.getSpeed()}`;
+
+             requestAnimationFrame(animate);
+            //setTimeout(animate, 2); // Adds 0.01s delay
         }
 
-        animate();
-    </script>
-</body>
-</html>
+        function restartAnimation() {
+            ball.reset();
+            isAnimating = true;
+            animate();
+        }
+
+   </script>
+
