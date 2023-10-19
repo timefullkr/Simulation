@@ -33,12 +33,7 @@ class Ball:
         self.x += self.dx
         self.y += self.dy
 
-        # # 마찰력 추가
-        # friction = 0.99
-        # self.dx *= friction
-        # self.dy *= friction
-
-       
+        
 
         # 왼쪽 & 오른쪽 벽 충돌
         if self.x + self.w/2 > WIDTH:

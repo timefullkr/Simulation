@@ -9,36 +9,22 @@
     <link rel="icon" href="images/cannon.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        canvas {
-            border: 1px solid black;
-        }
-    </style>
 </head>
 
-<body>
-    <div id="container">
-        <canvas id="canvas"></canvas>
+<body class="d-flex vh-100 justify-content-center align-items-center">
+    <div id="container" >
+        <canvas id="canvas" class="border"></canvas>
+         
+        <div  class="d-flex justify-content-between " >
+            <div onclick="restartAnimation();" style="cursor: pointer; margin-top: 10px;">
+                Fire
+            </div>
+            <div id="status" style="margin-top: 10px;">
+                x: 0, y: 0, speed: 0
+            </div>
+        </div>
         
-        <div onclick="restartAnimation();" style="cursor: pointer; margin-top: 10px;">
-            animate
-        </div>
-        <div id="status" style="margin-top: 10px;">
-            x: 0, y: 0, speed: 0
-        </div>
     </div>
-    
-    <!-- Script content remains the same -->
-
 </body>
 
     <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
@@ -143,9 +129,10 @@
 
             ball.move();
             ball.display();
-
+            
+            
             document.getElementById('status').textContent =
-                `x: ${ball.x.toFixed(2)}, y: ${HEIGHT - R - ball.y.toFixed(2)}, speed: ${ball.getSpeed()}`;
+                `x: ${ parseInt(ball.x.toFixed(2))}, y: ${ parseInt(HEIGHT - R - ball.y.toFixed(2))}, speed: ${ parseInt(ball.getSpeed())}`;
 
              
             animateIndex=requestAnimationFrame(animate, 1000 / 5);
