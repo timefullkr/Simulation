@@ -50,7 +50,7 @@
             <input type="checkbox" id="theme-switch" onchange="toggleTheme()">
         </div>
         <canvas id="canvas"></canvas>
-        <div style="display: flex; ">
+        <div style="display: flex; justify-content: space-between; ">
             <div onclick="restartAnimation();" style="cursor: pointer;">
                 Start
             </div>
@@ -92,9 +92,9 @@
         const gravity = 9.8 / 10;
         const restitution = 0.7;
         const R = 10;
-
+        var animateIndex=0;
         let isAnimating = false;
-
+       
         class Ball {
             constructor() {
                 this.color = "rgba(255, 255, 255, 0.75)";
@@ -106,6 +106,7 @@
                 this.y = HEIGHT - R;
                 this.w = R * 2;
                 this.h = R * 2;
+                this.index=0
 
                 const angle = 45;
                 const speed = 50;
@@ -134,9 +135,7 @@
                     this.dy *= -restitution;
                 }
 
-                if (this.getSpeed() < 4 && HEIGHT - R - ball.y.toFixed(2) == 0) {
-                    isAnimating = false;
-                }
+               
             }
 
             display() {
@@ -164,7 +163,12 @@
             document.getElementById('status').textContent =
                 `x: ${ball.x.toFixed(2)}, y: ${HEIGHT - R - ball.y.toFixed(2)}, speed: ${ball.getSpeed()}`;
 
-            requestAnimationFrame(animate);
+            animateIndex=requestAnimationFrame(animate);
+            if ( ball.getSpeed() < 4 && HEIGHT - R - ball.y.toFixed(2) == 0) {
+                    // isAnimating = false;
+                  cancelAnimationFrame(animateIndex);
+             }
+            
         }
 
         function restartAnimation() {

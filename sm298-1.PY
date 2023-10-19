@@ -1,7 +1,6 @@
 import pygame
 import math
 import sys
-
 # Pygame 초기화
 pygame.init()
 
@@ -22,6 +21,7 @@ dy = -speed * math.sin(math.radians(angle))  # y 축의 속도
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Physics Simulation")
 
+
 # 클래스
 class Ball:
     def __init__(self, X, Y, W, H, DX, DY):
@@ -33,16 +33,12 @@ class Ball:
         self.x += self.dx
         self.y += self.dy
 
-        # 마찰력 추가
-        friction = 0.99
-        self.dx *= friction
-        self.dy *= friction
+        # # 마찰력 추가
+        # friction = 0.99
+        # self.dx *= friction
+        # self.dy *= friction
 
-        # 속도가 너무 낮으면 정지
-        minimum_speed = 0.1
-        if abs(self.dx) < minimum_speed and abs(self.dy) < minimum_speed:
-            self.dx = 0
-            self.dy = 0
+       
 
         # 왼쪽 & 오른쪽 벽 충돌
         if self.x + self.w/2 > WIDTH:
@@ -68,11 +64,14 @@ ball = Ball(X, Y, R*2, R*2, dx, dy)
 
 # 메인 루프
 running = True
+index=0
 while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+    for event in pygame.event.get():  
+            if event.type == pygame.QUIT: 
+                running = False  
 
+    # if index==1 :
+    #     continue
     screen.fill((220, 220, 220))
     
     ball.move()
@@ -81,7 +80,8 @@ while running:
     # 화면 갱신
     pygame.display.flip()
     pygame.time.Clock().tick(30)
-
+    index +=1
+   
 # 정리
 pygame.quit()
 sys.exit()

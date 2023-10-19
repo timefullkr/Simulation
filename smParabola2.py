@@ -99,10 +99,10 @@ while running:
     if touched_ground_x:
         display_first_touch_position(touched_ground_x)
 
-    if abs(ball.body.velocity[1]) < 1 and abs(ball.body.velocity[0]) <= 50:
-        ball.body.velocity = 0, 0
-    else:
-        display_velocity()
+    # if abs(ball.body.velocity[1]) < 1 and abs(ball.body.velocity[0]) <= 50:
+    #     ball.body.velocity = 0, 0
+    
+    display_velocity()
 
     pygame.display.flip()
     pygame.time.Clock().tick(60)
