@@ -92,8 +92,7 @@
                     if (this.y + R > HEIGHT) {
                         this.y = HEIGHT - R;
                         this.dy *= -restitution;
-
-                        // 마찰력 적용
+                        
                         this.dx *= friction;
 
                     } else if (this.y - R < 0) {
