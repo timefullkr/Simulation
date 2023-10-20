@@ -10,9 +10,9 @@ gravity = 9.8/10  # 중력 가속도. 스케일은 1:10
 restitution = 0.7  # 복원 계수
 
 R = 10  # 공의 반지름
-X, Y = R, HEIGHT  # Starting position (x, y)
+X, Y = R, HEIGHT//2 # Starting position (x, y)
 angle = 45  # 출발 각도
-speed = 200  # 공의 속도
+speed = 35  # 공의 속도
 
 # 속도 계산
 dx = speed * math.cos(math.radians(angle))  # x 축의 속도
@@ -66,8 +66,8 @@ while running:
             if event.type == pygame.QUIT: 
                 running = False  
 
-    if index==2 :
-        continue
+    #if index==2 :
+    #    continue
     screen.fill((220, 220, 220))
     
     ball.move()
