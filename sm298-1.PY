@@ -12,7 +12,7 @@ restitution = 0.7  # 복원 계수
 R = 10  # 공의 반지름
 X, Y = R, HEIGHT//2 # Starting position (x, y)
 angle = 45  # 출발 각도
-speed = 35  # 공의 속도
+speed = 45  # 공의 속도
 
 # 속도 계산
 dx = speed * math.cos(math.radians(angle))  # x 축의 속도
