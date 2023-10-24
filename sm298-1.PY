@@ -1,6 +1,7 @@
 import pygame
 import math
 import sys
+import time
 # Pygame 초기화
 pygame.init()
 
@@ -37,6 +38,7 @@ class Ball:
         
 
         # 왼쪽 & 오른쪽 벽 충돌
+        
         if self.x + self.w/2 > WIDTH:
             self.x = WIDTH - self.w/2
             self.dx *= -restitution
@@ -62,20 +64,23 @@ ball = Ball(X, Y, R*2, R*2, dx, dy)
 running = True
 
 while running:
-    
+
     for event in pygame.event.get():  
             if event.type == pygame.QUIT: 
                 running = False  
-
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                   print(" Press K_SPACE")
+                 
     screen.fill((220, 220, 220))
-    
     ball.move()
     ball.display()
 
     # 화면 갱신
     pygame.display.flip()
     pygame.time.Clock().tick(30)
-   
+    
+    
 
 pygame.quit()
 sys.exit()
