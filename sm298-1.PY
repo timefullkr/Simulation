@@ -11,7 +11,7 @@ restitution = 0.7  # 복원 계수
 
 R = 10  # 공의 반지름
 X, Y = R, HEIGHT//2 # Starting position (x, y)
-angle = 45  # 출발 각도
+angle = 30  # 출발 각도
 speed = 45  # 공의 속도
 
 # 속도 계산
@@ -60,14 +60,13 @@ ball = Ball(X, Y, R*2, R*2, dx, dy)
 
 # 메인 루프
 running = True
-index=0
+
 while running:
+    
     for event in pygame.event.get():  
             if event.type == pygame.QUIT: 
                 running = False  
 
-    #if index==2 :
-    #    continue
     screen.fill((220, 220, 220))
     
     ball.move()
@@ -76,8 +75,7 @@ while running:
     # 화면 갱신
     pygame.display.flip()
     pygame.time.Clock().tick(30)
-    index +=1
    
-# 정리
+
 pygame.quit()
 sys.exit()
