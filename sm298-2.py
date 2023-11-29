@@ -20,7 +20,9 @@ dy = -speed * math.sin(math.radians(angle))  # y축 속도
 # 디스플레이 설정
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("물리 시뮬레이션")
-font = pygame.font.Font(None, 36)
+
+font_name = pygame.font.match_font('malgungothic')  # Windows 시스템 예시
+font = pygame.font.Font(font_name, 14)
 
 # 클래스 정의
 class Trace:
